@@ -1,5 +1,6 @@
 import Responsable from "./Responsable.js"
 import {Db} from './db.js'
+import { API } from "./api.js";
 
 const div_add = document.getElementById("add_responsible");
 const btn_show = document.getElementById("add_resp");
@@ -14,27 +15,23 @@ const close_btn = document.getElementsByClassName("close");
 var codi;
 var check_click_info = 0;
 
-let dataBase = new Db();
+// let dataBase = new Db();
 
 var resp_llista = []
 
 // var resp_llista = [] = JSON.parse(window.localStorage.getItem(nom_storage) || "[]")
+let dataBase = new API();
 
-
-dataBase.getResp().then((i)=>{
+dataBase.getResp().then((i)=>
+{
   resp_llista = i;
   console.log(resp_llista)
-
   if(resp_llista.length != 0)
   {
-   load_responsible();
+    load_responsible();
   }
 });
 
-
-if(resp_llista.length != 0){
- load_responsible()
-}
 
 btn_show.addEventListener("click", ()=>{
   
