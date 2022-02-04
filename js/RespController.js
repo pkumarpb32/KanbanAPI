@@ -16,11 +16,9 @@ var codi;
 var check_click_info = 0;
 
 // let dataBase = new Db();
-
 var resp_llista = []
-
 // var resp_llista = [] = JSON.parse(window.localStorage.getItem(nom_storage) || "[]")
-let dataBase = new API();
+var dataBase = new API();
 
 dataBase.getResp().then((i)=>
 {
@@ -31,7 +29,6 @@ dataBase.getResp().then((i)=>
     load_responsible();
   }
 });
-
 
 btn_show.addEventListener("click", ()=>{
   
@@ -45,6 +42,7 @@ btn_si.addEventListener("click", ()=>{
   eliminar_responsable(codi);
   document.getElementById("delete_resp").style.display = "none";
 });
+
 btn_no.addEventListener("click", ()=>{
   document.getElementById("delete_resp").style.display = "none";
 });
