@@ -6,8 +6,6 @@ const div_add = document.getElementById("add_responsible");
 const btn_show = document.getElementById("add_resp");
 const btn_add = document.getElementById("btn_add_resp")
 const context_menu = document.getElementById("menu_responsable");
-const btn_eliminar = document.getElementById("eliminar");
-const btn_modificar = document.getElementById("modificar");
 const info_resp = document.getElementById("info_resp");
 const btn_si = document.getElementById("btn_si");
 const btn_no = document.getElementById("btn_no");
@@ -68,8 +66,38 @@ function load_responsible(){
         li.addEventListener('click', info);
         li.id = element.codi;
         document.getElementById("resp_list").appendChild(li);
+        afegirButtons(element.codi);
     });
 }
+
+// Afegir buttons per eliminar i modificar tasques
+function afegirButtons(code){
+  var btn_modificar = document.createElement('button');
+  btn_modificar.type = 'button';
+  btn_modificar.innerHTML = '<span class="material-icons">edit</span>';
+  btn_modificar.onclick = function() {
+    let r =  resp_llista.find(element => element.codi == code);
+    document.getElementById("name").value = r.nom;
+    document.getElementById("email").value = r.email;
+    div_add.style.display = "block"
+    context_menu.style.display = "none";
+    codi = code;
+  };
+
+    var btn_delete = document.createElement('button');
+    btn_delete.type = 'button';
+    btn_delete.innerHTML = '<span class="material-icons">delete</span>';
+    btn_delete.onclick = function(e) {
+      document.getElementById("delete_resp").style.display = "block";
+      context_menu.style.display = "none";
+      codi = code;
+    };
+  var div_tasques = document.createElement("div");
+  div_tasques.appendChild(btn_delete);
+  div_tasques.appendChild(btn_modificar);
+  document.getElementById(code).appendChild(div_tasques);
+}
+
 
 // mostrar el context menu
 function mostar_menu(event){
@@ -81,28 +109,12 @@ function mostar_menu(event){
     codi = event.target.id;
   }
 
-  btn_eliminar.addEventListener("click",(e) =>{
-
-     document.getElementById("delete_resp").style.display = "block";
-    context_menu.style.display = "none";
-  });
-
   function eliminar_responsable(id){
     let r =  resp_llista.find(element => element.codi == id);
     resp_llista.splice(resp_llista.indexOf(r),1);
     document.getElementById(id).remove();
-    // localStorage.setItem(nom_storage, JSON.stringify(resp_llista));
     dataBase.deleteResp(id);
-
   };
-
-  btn_modificar.addEventListener("click", (e) =>{
-    let r =  resp_llista.find(element => element.codi == codi);
-    document.getElementById("name").value = r.nom;
-    document.getElementById("email").value = r.email;
-    div_add.style.display = "block"
-    context_menu.style.display = "none";
-  });
 
 function addResp()
 {
@@ -135,6 +147,7 @@ function addResp()
       div.addEventListener('click', info);
       div.id = resp.codi;
       document.getElementById("resp_list").appendChild(div);
+      afegirButtons(resp.codi);
       div_add.style.display = "none";
       if(info_resp.style.display = "block"){
         info_resp.style.display = "none";

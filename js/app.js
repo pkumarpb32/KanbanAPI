@@ -1,7 +1,10 @@
 import Tasca from './Tasca.js'
 import {Db} from './db.js'
+import { API } from './api.js';
 
-let dataBase = new Db();
+//  let dataBase = new Db();
+
+var dataBase = new API();
 const dropdown_r = document.getElementById("select_responsible");
 const add_box = document.getElementById("add_task");
 const btn_add = document.getElementById("add");
@@ -18,12 +21,13 @@ var tasks = [];
 var resp_llista = [];
 setMinDate();
 // carregar les tasques
-dataBase.getTasks().then((tasques)=>{
-  tasks = tasques;
-  if(tasks.length != 0){
+dataBase.getTasks().then((t)=>{
+  tasks = t;
+  if(tasks.length !== 0){
    load_tasks();
   }
 });
+
 
 dataBase.getResp().then((responsables)=>{
   resp_llista = responsables;
@@ -84,9 +88,7 @@ btn_add.addEventListener("click", ()=>{
   codi = 0;
 });
 // botó per afegir una nova tasca
-btn_done.addEventListener("click", ()=>{
-  console.log("clicked");
-  
+btn_done.addEventListener("click", ()=>{  
   guardarTasca();
 });
 document.getElementById("change_responsable").addEventListener("click", ()=>{
@@ -105,6 +107,7 @@ btn_si.addEventListener("click", ()=>{
 btn_no.addEventListener("click", ()=>{
   document.getElementById("delete_box").style.display = "none";
 });
+
 // funció per eliminar tasca del array tasca i de la llista div
 function eliminar_tasca(id){
   let t =  tasks.find(element => element.codi == id);
@@ -113,6 +116,7 @@ function eliminar_tasca(id){
   dataBase.deleteTask(id);
   // localStorage.setItem(nom_tasques_storage, JSON.stringify(tasks));
 };
+
 function guardarTasca(){
   // comprovar que el camp nom no sigui buit
   if(document.getElementById("name").value != "" && document.getElementById("description").value != "" 
@@ -134,7 +138,6 @@ function guardarTasca(){
     { 
       if(tasca.codi == codi)
       {
-        console.log("entrat");
         eliminar_tasca(tasca.codi);
       }
       tasca.nom = document.getElementById("name").value;
@@ -239,8 +242,6 @@ function info(event)
   if(check_click != event.target.id){
     let t =  tasks.find(e => e.codi == event.target.id);
     let r = resp_llista.find(el => el.codi == t.id_responsable);
-    console.log(t.codi);
-    // document.getElementById("codi_tasca").innerHTML = codi;
     document.getElementById("nom_tasca").innerHTML = t.nom;
     document.getElementById("data_creacio").innerHTML = t.data_creacio;
     document.getElementById("data_previsio").innerHTML = t.data_previsio;
@@ -249,7 +250,6 @@ function info(event)
     document.getElementById("id_responsable").innerHTML = r.nom;
     document.getElementById("correu_responsable").innerHTML = r.email;
     document.getElementById("prioritat").innerHTML = t.prioritat;
-
     event.target.parentNode.insertBefore(div_info, event.target.nextSibling);
     div_info.style.display = "block";
     check_click = event.target.id;
