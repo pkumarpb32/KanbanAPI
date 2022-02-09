@@ -218,8 +218,12 @@ input[type=text],[type=date], select, textarea {
     border:1px solid; 
   }
 
+<<<<<<< HEAD
   .container{
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+=======
+  }
+>>>>>>> 8c8187ba955ea650b0b233785f63948cd51d35b4
