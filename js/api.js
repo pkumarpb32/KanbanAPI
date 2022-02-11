@@ -24,7 +24,7 @@ export class API
             });
         if(response.ok){
             const data = await response.json();
-            console.log(data.responsables);
+            console.log(data);
             alert("Fet");
         }
     }
@@ -41,7 +41,7 @@ export class API
                 if(res.ok) {
                     res.json()
                         .then((res2) => {
-                        console.log("Fet: ", res2.responsables);
+                        console.log("Fet: ", res2);
                         })
                 } else {
                     console.log("Error!")
@@ -91,7 +91,7 @@ export class API
                 if(res.ok) {
                     res.json()
                         .then((res2) => {
-                        console.log("Fet: ", res2.tasques);
+                        console.log("Fet: ", res2);
                         })
                 } else {
                     console.log("Error!")

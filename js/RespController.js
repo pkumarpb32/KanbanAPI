@@ -5,7 +5,6 @@ import { API } from "./api.js";
 const div_add = document.getElementById("add_responsible");
 const btn_show = document.getElementById("add_resp");
 const btn_add = document.getElementById("btn_add_resp")
-const context_menu = document.getElementById("menu_responsable");
 const info_resp = document.getElementById("info_resp");
 const btn_si = document.getElementById("btn_si");
 const btn_no = document.getElementById("btn_no");
@@ -13,7 +12,7 @@ const close_btn = document.getElementsByClassName("close");
 var codi;
 var check_click_info = 0;
 
-// let dataBase = new Db();
+// var dataBase = new Db();
 var resp_llista = []
 // var resp_llista = [] = JSON.parse(window.localStorage.getItem(nom_storage) || "[]")
 var dataBase = new API();
@@ -45,12 +44,6 @@ btn_no.addEventListener("click", ()=>{
   document.getElementById("delete_resp").style.display = "none";
 });
 
-document.querySelector("body").addEventListener("click", (e) =>{
-  if(e.target.offsetParent != context_menu){
-    context_menu.style.display = "none";
-  }
-  });
-
 close_btn[0].addEventListener("click", ()=>{
   clearValues();
   div_add.style.display = "none"
@@ -62,7 +55,6 @@ function load_responsible(){
         let li = document.createElement("div")
         li.appendChild(document.createTextNode(element.nom))
         li.classList.add("responsable")
-        li.addEventListener('contextmenu', mostar_menu);
         li.addEventListener('click', info);
         li.id = element.codi;
         document.getElementById("resp_list").appendChild(li);
@@ -80,7 +72,6 @@ function afegirButtons(code){
     document.getElementById("name").value = r.nom;
     document.getElementById("email").value = r.email;
     div_add.style.display = "block"
-    context_menu.style.display = "none";
     codi = code;
   };
 
@@ -89,7 +80,6 @@ function afegirButtons(code){
     btn_delete.innerHTML = '<span class="material-icons">delete</span>';
     btn_delete.onclick = function(e) {
       document.getElementById("delete_resp").style.display = "block";
-      context_menu.style.display = "none";
       codi = code;
     };
   var div_tasques = document.createElement("div");
@@ -98,18 +88,7 @@ function afegirButtons(code){
   document.getElementById(code).appendChild(div_tasques);
 }
 
-
-// mostrar el context menu
-function mostar_menu(event){
-    event.preventDefault();
-    const {clientX : mouseX, clientY : mouseY} = event;
-    context_menu.style.top =  `${mouseY}px`;
-    context_menu.style.left =  `${mouseX}px`;
-    context_menu.style.display = "block";
-    codi = event.target.id;
-  }
-
-  function eliminar_responsable(id){
+function eliminar_responsable(id){
     let r =  resp_llista.find(element => element.codi == id);
     resp_llista.splice(resp_llista.indexOf(r),1);
     document.getElementById(id).remove();
@@ -143,7 +122,6 @@ function addResp()
       let div = document.createElement("div");
       div.appendChild(document.createTextNode(resp.nom));
       div.classList.add("responsable");
-      div.addEventListener('contextmenu', mostar_menu);
       div.addEventListener('click', info);
       div.id = resp.codi;
       document.getElementById("resp_list").appendChild(div);

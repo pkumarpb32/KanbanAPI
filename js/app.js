@@ -2,7 +2,7 @@ import Tasca from './Tasca.js'
 import {Db} from './db.js'
 import { API } from './api.js';
 
-//  let dataBase = new Db();
+//var dataBase = new Db();
 
 var dataBase = new API();
 const dropdown_r = document.getElementById("select_responsible");
